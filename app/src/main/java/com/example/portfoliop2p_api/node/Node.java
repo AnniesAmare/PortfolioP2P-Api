@@ -17,6 +17,10 @@ public class Node extends Application {
     ArrayList<String> nodesLeft;
     ArrayList<String> nodesRight;
 
+    public String getId(){
+        return id;
+    }
+
     public ArrayList<String> GetPhonebookLeft(){
         return nodesLeft;
     }

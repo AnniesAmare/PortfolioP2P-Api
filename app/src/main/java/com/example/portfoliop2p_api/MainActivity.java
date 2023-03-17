@@ -4,11 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.example.portfoliop2p_api.http.HttpRequest;
 import com.example.portfoliop2p_api.node.Node;
 import com.example.portfoliop2p_api.node.NodeSingleton;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     // Variables
@@ -17,6 +27,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //UI
     private Button backButton;
+    private Button submitCommand;
+    private TextView serverInfoTv, clientInfoTv;
+
+    // Logging/status messages
+    private String serverinfo = "SERVER LOG:";
+    private String clientinfo = "CLIENT LOG: ";
+
 
     //Singleton
     NodeSingleton nodeSingleton = NodeSingleton.getInstance();
@@ -30,6 +47,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // UI
         backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(this);
+
+        submitCommand = findViewById(R.id.submitCommand);
+        submitCommand.setOnClickListener(this);
+
+        serverInfoTv = findViewById(R.id.serveroutput);
+        clientInfoTv = findViewById(R.id.clientoutput);
+
 
         // Singleton
         node = nodeSingleton.node;
@@ -52,6 +76,97 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             myIntent.putExtra("command", command);
             startActivity(myIntent);
         }
+        if (view == submitCommand){
+            submitCommand.setText("Resend "+command+" to "+ serverIp);
+            Thread clientThread = new Thread(new MyClientThread());
+            clientThread.start();
+        } else if (view.getId() == R.id.submitCommand){
+            Thread clientThread = new Thread(new MyClientThread());
+            clientThread.start();
+        }
+    }
 
+    class MyClientThread implements Runnable {
+        @Override
+        public void run() {
+            try {
+                cUpdate("CLIENT: starting client socket ");
+                Socket connectionToServer = new Socket(serverIp, 4444);
+                cUpdate("CLIENT: client connected ");
+
+                DataInputStream inClientStream = new DataInputStream(connectionToServer.getInputStream());
+                DataOutputStream outClientStream = new DataOutputStream(connectionToServer.getOutputStream());
+
+                String serverResponse;
+
+                //default value for clientRequest
+                String clientRequest = command;
+
+                //Constructing the command
+                if (!command.isEmpty()){
+                    switch (command.toLowerCase()){
+                        case "getid":
+                            HttpRequest httpRequest = new HttpRequest("HTTP", "GET", "getID");
+                            clientRequest = httpRequest.GetJsonString();
+                            break;
+                    }
+                }
+
+                outClientStream.writeUTF(clientRequest);
+                outClientStream.flush();
+                cUpdate("I said:      " + clientRequest);
+                serverResponse = inClientStream.readUTF();
+                cUpdate("Server says: " + serverResponse);
+
+                waitABit();
+                connectionToServer.shutdownInput();
+                cUpdate("CLIENT: closed inputstream");
+                connectionToServer.shutdownOutput();
+                cUpdate("CLIENT: closed outputstream");
+                connectionToServer.close();
+                cUpdate("CLIENT: closed socket");
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+
+        }//run()
+    } //class MyClientThread
+
+    //Wait by setting the thread to sleep for 1,5 seconds
+    private void waitABit() {
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void sUpdate(String message) {
+        //Run this code on UI-thread
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                serverinfo = message + "\n" + serverinfo;
+                serverInfoTv.setText(serverinfo);
+            }
+        });
+
+    }
+
+    //Client update TextView
+    private void cUpdate(String message) {
+        System.out.println(message);
+
+        //Run this code on UI-thread
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                clientinfo = message + "\n" + clientinfo;
+                clientInfoTv.setText(clientinfo);
+            }
+        });
     }
 }

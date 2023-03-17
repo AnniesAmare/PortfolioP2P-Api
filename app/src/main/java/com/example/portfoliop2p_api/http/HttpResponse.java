@@ -4,9 +4,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class HttpResponse {
-    String Header;
-    String Status;
-    String Body;
+    public String Header;
+    public String Status;
+    public String Body;
 
     public HttpResponse(String header, String status, String body){
         this.Header = header;
