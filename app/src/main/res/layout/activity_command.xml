@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CommandActivity">
+
+    <Button
+        android:id="@+id/newNeighbor"
+        android:layout_width="196dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="52dp"
+        android:text="New Neighbor"
+        app:layout_constraintBottom_toTopOf="@+id/getId"
+        app:layout_constraintEnd_toEndOf="@+id/getId"
+        app:layout_constraintStart_toStartOf="@+id/getId"
+        app:layout_constraintTop_toBottomOf="@+id/textField" />
+
+    <Button
+        android:id="@+id/getId"
+        android:layout_width="196dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="52dp"
+        android:text="Get ID"
+        app:layout_constraintBottom_toTopOf="@+id/getPhonebook"
+        app:layout_constraintEnd_toEndOf="@+id/getPhonebook"
+        app:layout_constraintStart_toStartOf="@+id/getPhonebook"
+        app:layout_constraintTop_toBottomOf="@+id/newNeighbor" />
+
+    <Button
+        android:id="@+id/deleteData"
+        android:layout_width="196dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="51dp"
+        android:text="Delete Data"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addData" />
+
+    <Button
+        android:id="@+id/getData"
+        android:layout_width="196dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="52dp"
+        android:text="Get Data"
+        app:layout_constraintBottom_toTopOf="@+id/addData"
+        app:layout_constraintEnd_toEndOf="@+id/addData"
+        app:layout_constraintStart_toStartOf="@+id/addData"
+        app:layout_constraintTop_toBottomOf="@+id/getPhonebook" />
+
+    <Button
+        android:id="@+id/getPhonebook"
+        android:layout_width="196dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="51dp"
+        android:text="Get Phonebook"
+        app:layout_constraintBottom_toTopOf="@+id/getData"
+        app:layout_constraintEnd_toEndOf="@+id/getData"
+        app:layout_constraintStart_toStartOf="@+id/getData"
+        app:layout_constraintTop_toBottomOf="@+id/getId" />
+
+    <Button
+        android:id="@+id/addData"
+        android:layout_width="196dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="52dp"
+        android:text="Add Data"
+        app:layout_constraintBottom_toTopOf="@+id/deleteData"
+        app:layout_constraintEnd_toEndOf="@+id/deleteData"
+        app:layout_constraintStart_toStartOf="@+id/deleteData"
+        app:layout_constraintTop_toBottomOf="@+id/getData" />
+
+    <TextView
+        android:id="@+id/textField"
+        android:layout_width="205dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="48dp"
+        android:text="UNKNOWN"
+        app:layout_constraintBottom_toTopOf="@+id/newNeighbor"
+        app:layout_constraintEnd_toEndOf="@+id/newNeighbor"
+        app:layout_constraintStart_toStartOf="@+id/newNeighbor"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
