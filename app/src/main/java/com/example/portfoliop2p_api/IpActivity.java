@@ -5,15 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.TextView;
+
+import com.example.portfoliop2p_api.node.Node;
+import com.example.portfoliop2p_api.node.NodeSingleton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class IpActivity extends AppCompatActivity implements View.OnClickListener {
     //variables

@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.portfoliop2p_api.node.Node;
+import com.example.portfoliop2p_api.node.NodeSingleton;
+
 public class CommandActivity extends AppCompatActivity implements View.OnClickListener{
     //UI-elements
     private TextView thisIp;

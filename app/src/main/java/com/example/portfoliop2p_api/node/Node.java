@@ -1,4 +1,4 @@
-package com.example.portfoliop2p_api;
+package com.example.portfoliop2p_api.node;
 
 import android.app.Application;
 import android.net.wifi.WifiInfo;
@@ -12,16 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Node extends Application {
-    String id;
+    public String id;
 
     ArrayList<String> nodesLeft;
     ArrayList<String> nodesRight;
 
-    ArrayList<String> GetPhonebookLeft(){
+    public ArrayList<String> GetPhonebookLeft(){
         return nodesLeft;
     }
 
-    ArrayList<String> GetPhonebookRight(){
+    public ArrayList<String> GetPhonebookRight(){
         return nodesRight;
     }
 

@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.portfoliop2p_api.node.Node;
+import com.example.portfoliop2p_api.node.NodeSingleton;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     // Variables
     String command;
