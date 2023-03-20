@@ -119,7 +119,26 @@ public class NodeSingleton {
                                 break;
 
                             case "getneighbors":
-                                httpResponse = new HttpResponse("HTTP", "200 OK", "Not implemented");
+                                ArrayList<String> rightNeighbors = node.GetPhonebookRight();
+                                ArrayList<String> leftNeighbors = node.GetPhonebookLeft();
+                                String temp = "{rightNeighbors: [ " +
+                                        "{id: " + leftNeighbors.get(0) +
+                                        " IP: " + leftNeighbors.get(0) + "}," +
+                                        "{id: " + leftNeighbors.get(1) +
+                                        " IP: " + leftNeighbors.get(1) + "}," +
+                                        "{id: " + leftNeighbors.get(2) +
+                                        " IP: " + leftNeighbors.get(2) + "}" +
+                                        "]" +
+                                                "{leftNeighbors: [ " +
+                                        "{id: " + rightNeighbors.get(0) +
+                                        " IP: " + rightNeighbors.get(0) + "}," +
+                                        "{id: " + rightNeighbors.get(1) +
+                                        " IP: " + rightNeighbors.get(1) + "}," +
+                                        "{id: " + rightNeighbors.get(2) +
+                                        " IP: " + rightNeighbors.get(2) + "}]}";
+                                httpResponse = new HttpResponse("HTTP", "200 OK", temp);
+
+                                System.out.println(httpResponse);
                                 break;
 
                             default:

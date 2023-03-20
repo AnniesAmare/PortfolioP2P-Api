@@ -104,9 +104,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //Constructing the command
                 if (!command.isEmpty()){
+                    HttpRequest httpRequest;
                     switch (command.toLowerCase()){
                         case "getid":
-                            HttpRequest httpRequest = new HttpRequest("HTTP", "GET", "getID");
+                            httpRequest = new HttpRequest("HTTP", "GET", "getID");
+                            clientRequest = httpRequest.GetJsonString();
+                            break;
+
+                        case "getphonebook":
+                            httpRequest = new HttpRequest("HTTP", "GET", "getneighbors");
                             clientRequest = httpRequest.GetJsonString();
                             break;
                     }

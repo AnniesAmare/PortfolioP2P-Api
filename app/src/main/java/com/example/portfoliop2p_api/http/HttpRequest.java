@@ -4,10 +4,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class HttpRequest {
-    public String Header;
-    public String Method;
+    String Header;
+    String Method;
     public String Path;
-    public String Body;
+    String Body;
 
     public HttpRequest(String header, String method, String path, String body){
         this.Header = header;
