@@ -141,6 +141,35 @@ public class NodeSingleton {
                                 System.out.println(httpResponse);
                                 break;
 
+                            case "updatephonebook":
+                                String input = httpRequest.Body.toLowerCase();
+
+                                //node.nodesRight.set(0, T[0].split(":")[0]).replace("ip", "");
+                                //node.nodesRight.set(1, T[1].split(":")[0]).replace("ip", "");
+                                //node.nodesRight.set(2, T[2].split(":")[0]).replace("ip", "");
+
+                                //node.nodesLeft.set(0, T[3].split(":")[0]).replace("ip", "");
+                                //node.nodesRight.set(1, T[4].split(":")[0]).replace("ip", "");
+                                //node.nodesRight.set(2, T[5].split(":")[0]).replace("ip", "");
+
+                                System.out.println("T" + T[0]);
+                                System.out.println(T[1]);
+                                System.out.println(T[2]);
+                                System.out.println(T[3]);
+                                System.out.println("T" + T[4]);
+
+
+                                System.out.println(node.nodesRight.get(0));
+                                System.out.println(node.nodesRight.get(1));
+                                System.out.println(node.nodesRight.get(2));
+
+                                System.out.println(node.nodesLeft.get(0));
+                                System.out.println(node.nodesLeft.get(1));
+                                System.out.println(node.nodesLeft.get(2));
+
+                                httpResponse = new HttpResponse("HTTP", "200 OK", "");
+                                break;
+
                             default:
                                 System.out.println("Does not recognize path: " + httpRequest.Path.toLowerCase());
                                 httpResponse = new HttpResponse("HTTP", "400 Bad Request");
@@ -172,6 +201,13 @@ public class NodeSingleton {
 
     }
 
+    private String[] breakUpBody(String input){
+        String[] result;
+
+        result = input.split(",");
+
+        return result;
+    }
 
     private void waitABit() {
         try {

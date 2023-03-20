@@ -7,7 +7,7 @@ public class HttpRequest {
     String Header;
     String Method;
     public String Path;
-    String Body;
+    public String Body;
 
     public HttpRequest(String header, String method, String path, String body){
         this.Header = header;

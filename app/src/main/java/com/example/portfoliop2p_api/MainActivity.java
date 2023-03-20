@@ -19,6 +19,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     // Variables
@@ -113,6 +114,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         case "getphonebook":
                             httpRequest = new HttpRequest("HTTP", "GET", "getneighbors");
+                            clientRequest = httpRequest.GetJsonString();
+                            break;
+
+                        case "newneighbor":
+
+                            ArrayList<String> rightNeighbors = node.GetPhonebookRight();
+                            ArrayList<String> leftNeighbors = node.GetPhonebookLeft();
+                            String temp = "{rightNeighbors: [ " +
+                                    "{id: " + leftNeighbors.get(0) +
+                                    " IP: " + leftNeighbors.get(0) + "}," +
+                                    "{id: " + leftNeighbors.get(1) +
+                                    " IP: " + leftNeighbors.get(1) + "}," +
+                                    "{id: " + leftNeighbors.get(2) +
+                                    " IP: " + leftNeighbors.get(2) + "}" +
+                                    "]" +
+                                    "{leftNeighbors: [ " +
+                                    "{id: " + rightNeighbors.get(0) +
+                                    " IP: " + rightNeighbors.get(0) + "}," +
+                                    "{id: " + rightNeighbors.get(1) +
+                                    " IP: " + rightNeighbors.get(1) + "}," +
+                                    "{id: " + rightNeighbors.get(2) +
+                                    " IP: " + rightNeighbors.get(2) + "}]}";
+
+                            httpRequest = new HttpRequest("HTTP", "GET", "updatephonebook", temp);
                             clientRequest = httpRequest.GetJsonString();
                             break;
                     }
