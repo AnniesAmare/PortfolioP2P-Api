@@ -65,39 +65,29 @@ public class CommandActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         String command = "";
 
-        if(view == newNeighbor || view == getID || view == getPhonebook) {
-            if (view == newNeighbor) {
-                command = "newNeighbor";
-            }
-            if (view == getID) {
-                command = "getID";
-            }
-            if (view == getPhonebook) {
-                command = "getPhonebook";
-            }
-
-            Intent myIntent = new Intent(this, IpActivity.class);
-            myIntent.putExtra("command", command);
-            startActivity(myIntent);
-
-        }else {
-
-            if (view == getData) {
-                command = "getData";
-            }
-            if (view == addData) {
-                command = "addData";
-            }
-            if (view == deleteData) {
-                command = "deleteData";
-            }
-
-
-            Intent myIntent = new Intent(this, DataActivity.class);
-            myIntent.putExtra("command", command);
-            startActivity(myIntent);
-
+        if (view == newNeighbor) {
+            command = "newNeighbor";
         }
+        if (view == getID) {
+            command = "getID";
+        }
+        if (view == getPhonebook) {
+            command = "getPhonebook";
+        }
+        if (view == getData) {
+            command = "getData";
+        }
+        if (view == addData) {
+            command = "addData";
+        }
+        if (view == deleteData) {
+            command = "deleteData";
+        }
+
+
+        Intent myIntent = new Intent(this, IpActivity.class);
+        myIntent.putExtra("command", command);
+        startActivity(myIntent);
 
     }
 

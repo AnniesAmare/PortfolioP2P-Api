@@ -119,10 +119,21 @@ public class IpActivity extends AppCompatActivity implements View.OnClickListene
                     serverIp = leftButtonIP3.getText().toString();
                     break;
             }
-            Intent myIntent = new Intent(this, MainActivity.class);
-            myIntent.putExtra("command", command);
-            myIntent.putExtra("serverIp", serverIp);
-            startActivity(myIntent);
+
+            if(command == "addData"){
+                Intent myIntent = new Intent(this, DataActivity.class);
+                myIntent.putExtra("command", command);
+                myIntent.putExtra("serverIp", serverIp);
+                startActivity(myIntent);
+
+            }else {
+                Intent myIntent = new Intent(this, MainActivity.class);
+                myIntent.putExtra("command", command);
+                myIntent.putExtra("serverIp", serverIp);
+                startActivity(myIntent);
+            }
+
+
         }
     }
 }
