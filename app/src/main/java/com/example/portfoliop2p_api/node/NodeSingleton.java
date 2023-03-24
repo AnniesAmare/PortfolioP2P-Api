@@ -7,12 +7,14 @@ import android.net.wifi.WifiManager;
 
 import com.example.portfoliop2p_api.http.HttpRequest;
 import com.example.portfoliop2p_api.http.HttpResponse;
+import com.example.portfoliop2p_api.data.Data;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.Permission;
 import java.util.ArrayList;
 
 public class NodeSingleton {
@@ -180,9 +182,22 @@ public class NodeSingleton {
 
                             case "adddata":
 
+                                String Permission_error = "Error: no location";
 
+                                if(httpRequest.Body != Permission_error) {
+                                    //add data (which is the request body)
+                                    String hash = node.AddData(httpRequest.Body);
 
+                                    //send back key in body
+                                    httpResponse = new HttpResponse("HTTP", "200 OK", "Data has been added. The key is: " + hash);
 
+                                }else{
+
+                                    httpResponse = new HttpResponse("HTTP", "400 Bad Request", Permission_error);
+
+                                }
+
+                                break;
 
                             default:
                                 System.out.println("Does not recognize path: " + httpRequest.Path.toLowerCase());

@@ -1,8 +1,18 @@
 package com.example.portfoliop2p_api.node;
 
+import com.example.portfoliop2p_api.data.Data;
+import com.example.portfoliop2p_api.data.SHA256;
+
+import android.Manifest;
 import android.app.Application;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -10,12 +20,15 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.*;
 
 public class Node extends Application {
     public String id;
 
     ArrayList<String> nodesLeft;
     ArrayList<String> nodesRight;
+
+    Dictionary DataStorage;
 
     public String getId(){
         return id;
@@ -46,6 +59,14 @@ public class Node extends Application {
         nodesRight.add(id);
         this.nodesRight = nodesRight;
 
+        DataStorage = new Hashtable();
+
+
+        //default value in storage FOR TESTING
+        this.DataStorage.put(
+                "9F86D081884C7D659A2FEAA0C55AD015A3BF4F1B2B0B822CD15D6C15B0F00A08",
+                "test");
+
     }
 
     private String getLocalIpAddress(WifiManager wifiManager) {
@@ -60,6 +81,26 @@ public class Node extends Application {
         }
         return address;
     }
+
+
+    public String AddData(String body) {
+
+        //hashes the the data. The hashed data is kept as key
+        SHA256 newHash = new SHA256();
+        String dataId = newHash.hash(body);
+
+        //create new data object
+        Data data = new Data(dataId,body);
+
+        //convert data to json to store it
+        String dataAsJson = data.DataToJson();
+
+        //add data to storage
+        this.DataStorage.put(data.ID,dataAsJson);
+
+        return dataId;
+    }
+
 
 
 }
