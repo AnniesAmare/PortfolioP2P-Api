@@ -1,5 +1,7 @@
 package com.example.portfoliop2p_api.node;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
 import android.annotation.SuppressLint;
 import android.net.wifi.WifiManager;
 
@@ -152,11 +154,17 @@ public class NodeSingleton {
                                 //node.nodesRight.set(1, T[4].split(":")[0]).replace("ip", "");
                                 //node.nodesRight.set(2, T[5].split(":")[0]).replace("ip", "");
 
+
+                                /*
+
                                 System.out.println("T" + T[0]);
                                 System.out.println(T[1]);
                                 System.out.println(T[2]);
                                 System.out.println(T[3]);
                                 System.out.println("T" + T[4]);
+
+
+                                 */
 
 
                                 System.out.println(node.nodesRight.get(0));
@@ -169,6 +177,12 @@ public class NodeSingleton {
 
                                 httpResponse = new HttpResponse("HTTP", "200 OK", "");
                                 break;
+
+                            case "adddata":
+
+
+
+
 
                             default:
                                 System.out.println("Does not recognize path: " + httpRequest.Path.toLowerCase());
