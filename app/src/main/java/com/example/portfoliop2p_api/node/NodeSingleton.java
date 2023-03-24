@@ -177,21 +177,9 @@ public class NodeSingleton {
                                 break;
 
                             case "adddata":
-
-                                String Permission_error = "Error: no location";
-
-                                if(httpRequest.Body != Permission_error) {
-                                    //add data (which is the request body)
-                                    String hash = node.AddData(httpRequest.Body);
-
-                                    //send back key in body
-                                    httpResponse = new HttpResponse("HTTP", "200 OK", "Data has been added. The key is: " + hash);
-
-                                }else{
-
-                                    httpResponse = new HttpResponse("HTTP", "400 Bad Request", Permission_error);
-
-                                }
+                                String hash = node.AddData(httpRequest.Body);
+                                //send back key in body
+                                httpResponse = new HttpResponse("HTTP", "200 OK", "Data has been added. The key is: " + hash);
 
                                 break;
 
