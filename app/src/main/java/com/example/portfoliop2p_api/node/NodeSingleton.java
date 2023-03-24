@@ -202,16 +202,29 @@ public class NodeSingleton {
                             case "getdata":
                                 //gets data based on key
                                 String data = node.GetData(httpRequest.Body);
-                                //sends data back to client
-                                httpResponse = new HttpResponse("HTTP", "200 OK", data);
+
+                                if(data == "Error: Requested data not found"){
+                                    httpResponse = new HttpResponse("HTTP", "400 Bad Request", data);
+
+                                }else {
+                                    //sends data back to client
+                                    httpResponse = new HttpResponse("HTTP", "200 OK", data);
+                                }
 
                                 break;
 
                             case "deletedata":
                                 //deletes data based on key
                                 String del_data = node.DeleteData(httpRequest.Body);
-                                //sends data back to client
-                                httpResponse = new HttpResponse("HTTP", "200 OK", "The data: " + del_data + ", has been deleted");
+
+
+                                if(del_data == "Error: Requested data not found"){
+                                    httpResponse = new HttpResponse("HTTP", "400 Bad Request", del_data);
+
+                                }else {
+                                    //sends data back to client
+                                    httpResponse = new HttpResponse("HTTP", "200 OK", "The data: " + del_data + ", has been deleted");
+                                }
 
                                 break;
 

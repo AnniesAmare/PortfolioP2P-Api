@@ -103,14 +103,27 @@ public class Node extends Application {
 
 
     public String GetData(String dataId){
-        String data = this.DataStorage.get(dataId).toString();
-        return data;
+
+        try{
+            String data = this.DataStorage.get(dataId).toString();
+            return data;
+        }catch (Exception e){
+            return "Error: Requested data not found";
+
+        }
+
     }
 
 
     public String DeleteData(String key){
-        String data = this.DataStorage.remove(key).toString();
-        return data;
+        try{
+            String data = this.DataStorage.remove(key).toString();
+            return data;
+
+        }catch (Exception e){
+            return "Error: Requested data not found";
+
+        }
     }
 
 
