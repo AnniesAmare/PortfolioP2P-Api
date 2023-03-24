@@ -64,6 +64,7 @@ public class CommandActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         String command = "";
+
         if (view == newNeighbor) {
             command = "newNeighbor";
         }
@@ -82,6 +83,7 @@ public class CommandActivity extends AppCompatActivity implements View.OnClickLi
         if (view == deleteData) {
             command = "deleteData";
         }
+
         Intent myIntent = new Intent(this, IpActivity.class);
         myIntent.putExtra("command", command);
         startActivity(myIntent);

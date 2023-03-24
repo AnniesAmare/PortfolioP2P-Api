@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // Variables
     String command;
     String serverIp;
+    String locationData;
 
     //UI
     private Button backButton;
@@ -68,9 +69,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (extras != null) {
             command = extras.getString("command");
             serverIp = extras.getString("serverIp");
+            locationData = extras.getString("locationData");
         }
         System.out.println("\n\n"+command+"\n\n");
         System.out.println("\n\n"+serverIp+"\n\n");
+        System.out.println("\n\n"+locationData+"\n\n");
     }
 
 
