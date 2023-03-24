@@ -120,13 +120,13 @@ public class IpActivity extends AppCompatActivity implements View.OnClickListene
                     break;
             }
 
-            if(command == "addData"){
+            if(command.contains("addData")){
                 Intent myIntent = new Intent(this, DataActivity.class);
                 myIntent.putExtra("command", command);
                 myIntent.putExtra("serverIp", serverIp);
                 startActivity(myIntent);
 
-            }else {
+            } else {
                 Intent myIntent = new Intent(this, MainActivity.class);
                 myIntent.putExtra("command", command);
                 myIntent.putExtra("serverIp", serverIp);

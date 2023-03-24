@@ -84,7 +84,6 @@ public class CommandActivity extends AppCompatActivity implements View.OnClickLi
             command = "deleteData";
         }
 
-
         Intent myIntent = new Intent(this, IpActivity.class);
         myIntent.putExtra("command", command);
         startActivity(myIntent);
