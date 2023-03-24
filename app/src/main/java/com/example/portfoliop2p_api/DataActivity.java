@@ -34,6 +34,9 @@ import com.google.android.gms.tasks.OnTokenCanceledListener;
 import com.google.android.gms.tasks.Task;
 
 public class DataActivity extends AppCompatActivity implements View.OnClickListener {
+    String command;
+    String serverIp;
+    String locationData;
 
     FusedLocationProviderClient fusedLocationClient;
     LocationCallback locationCallback; //for continuous updates
@@ -60,6 +63,14 @@ public class DataActivity extends AppCompatActivity implements View.OnClickListe
         continuous = findViewById(R.id.continuous);
 
         //startMaps();
+
+
+        //getting the data from the IP Activity
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            command = extras.getString("command");
+            serverIp = extras.getString("serverIp");
+        }
     }
 
     @Override
@@ -92,6 +103,19 @@ public class DataActivity extends AppCompatActivity implements View.OnClickListe
         //Check the radiobuttons
         if (once.isChecked()) askForLocationOnce();
         else askForLocationContinuously();
+
+        /*
+
+        Intent myIntent = new Intent(this, MainActivity.class);
+        myIntent.putExtra("command", command);
+        myIntent.putExtra("serverIp", serverIp);
+        myIntent.putExtra("locationData", locationData);
+        startActivity(myIntent);
+
+
+
+
+         */
 
     }
 
