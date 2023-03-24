@@ -12,8 +12,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.portfoliop2p_api.http.HttpRequest;
+import com.example.portfoliop2p_api.http.HttpResponse;
 import com.example.portfoliop2p_api.node.Node;
 import com.example.portfoliop2p_api.node.NodeSingleton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -121,23 +125,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                 ArrayList<String> rightNeighbors = node.GetPhonebookRight();
                                 ArrayList<String> leftNeighbors = node.GetPhonebookLeft();
-                                String temp = "{rightNeighbors: [ " +
-                                        "{id: " + leftNeighbors.get(0) +
-                                        " IP: " + leftNeighbors.get(0) + "}," +
-                                        "{id: " + leftNeighbors.get(1) +
-                                        " IP: " + leftNeighbors.get(1) + "}," +
-                                        "{id: " + leftNeighbors.get(2) +
-                                        " IP: " + leftNeighbors.get(2) + "}" +
-                                        "]" +
-                                        "{leftNeighbors: [ " +
-                                        "{id: " + rightNeighbors.get(0) +
-                                        " IP: " + rightNeighbors.get(0) + "}," +
-                                        "{id: " + rightNeighbors.get(1) +
-                                        " IP: " + rightNeighbors.get(1) + "}," +
-                                        "{id: " + rightNeighbors.get(2) +
-                                        " IP: " + rightNeighbors.get(2) + "}]}";
+                                JSONObject json = new JSONObject();
 
-                                httpRequest = new HttpRequest("HTTP", "GET", "updatephonebook", temp);
+                                try{
+                                    json.put("rightNeighbors", rightNeighbors);
+                                    json.put("leftNeighbors", leftNeighbors);
+
+                                }catch (JSONException e) {
+                                    System.out.println("Could not convert Right or Left neighbors to json");
+                                }
+                                String output = json.toString();
+
+                                httpRequest = new HttpRequest("HTTP", "GET", "updatephonebook", output);
+
+
                                 clientRequest = httpRequest.GetJsonString();
                                 break;
 

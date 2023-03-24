@@ -6,6 +6,9 @@ import android.net.wifi.WifiManager;
 import com.example.portfoliop2p_api.http.HttpRequest;
 import com.example.portfoliop2p_api.http.HttpResponse;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -121,22 +124,18 @@ public class NodeSingleton {
                             case "getneighbors":
                                 ArrayList<String> rightNeighbors = node.GetPhonebookRight();
                                 ArrayList<String> leftNeighbors = node.GetPhonebookLeft();
-                                String temp = "{rightNeighbors: [ " +
-                                        "{id: " + leftNeighbors.get(0) +
-                                        " IP: " + leftNeighbors.get(0) + "}," +
-                                        "{id: " + leftNeighbors.get(1) +
-                                        " IP: " + leftNeighbors.get(1) + "}," +
-                                        "{id: " + leftNeighbors.get(2) +
-                                        " IP: " + leftNeighbors.get(2) + "}" +
-                                        "]" +
-                                                "{leftNeighbors: [ " +
-                                        "{id: " + rightNeighbors.get(0) +
-                                        " IP: " + rightNeighbors.get(0) + "}," +
-                                        "{id: " + rightNeighbors.get(1) +
-                                        " IP: " + rightNeighbors.get(1) + "}," +
-                                        "{id: " + rightNeighbors.get(2) +
-                                        " IP: " + rightNeighbors.get(2) + "}]}";
-                                httpResponse = new HttpResponse("HTTP", "200 OK", temp);
+                                JSONObject json = new JSONObject();
+
+                                try{
+                                    json.put("rightNeighbors", rightNeighbors);
+                                    json.put("leftNeighbors", leftNeighbors);
+
+                                }catch (JSONException e) {
+                                    System.out.println("Could not convert body to json");
+                                }
+                                String output = json.toString();
+
+                                httpResponse = new HttpResponse("HTTP", "200 OK", output);
 
                                 System.out.println(httpResponse);
                                 break;
@@ -144,25 +143,34 @@ public class NodeSingleton {
                             case "updatephonebook":
                                 String input = httpRequest.Body.toLowerCase();
 
-                                //node.nodesRight.set(0, T[0].split(":")[0]).replace("ip", "");
-                                //node.nodesRight.set(1, T[1].split(":")[0]).replace("ip", "");
-                                //node.nodesRight.set(2, T[2].split(":")[0]).replace("ip", "");
+                                String right ="";
+                                String left ="";
 
-                                //node.nodesLeft.set(0, T[3].split(":")[0]).replace("ip", "");
-                                //node.nodesRight.set(1, T[4].split(":")[0]).replace("ip", "");
-                                //node.nodesRight.set(2, T[5].split(":")[0]).replace("ip", "");
+                                try{
+                                    JSONObject json_input = new JSONObject(input);
+                                    right = json_input.get("rightneighbors").toString();
+                                    left = json_input.get("leftneighbors").toString();
+                                }catch (Exception e){
+                                    System.out.println("Could not convert " + input + " to json");
+                                }
+
+                                right = right.replace("[","");
+                                right = right.replace("]","");
+                                right = right.replace(" ","");
+                                left = left.replace("[","");
+                                left = left.replace("]","");
+                                left = left.replace(" ","");
+
+                                node.nodesRight.set(0, right.split(",")[0]);
+                                node.nodesRight.set(1, right.split(",")[1]);
+                                node.nodesRight.set(2, right.split(",")[2]);
+
+                                node.nodesLeft.set(0, left.split(",")[0]);
+                                node.nodesLeft.set(1, left.split(",")[1]);
+                                node.nodesLeft.set(2, left.split(",")[2]);
 
 
-                                /*
 
-                                System.out.println("T" + T[0]);
-                                System.out.println(T[1]);
-                                System.out.println(T[2]);
-                                System.out.println(T[3]);
-                                System.out.println("T" + T[4]);
-
-
-                                 */
 
 
                                 System.out.println(node.nodesRight.get(0));
@@ -244,11 +252,14 @@ public class NodeSingleton {
     }
 
     private String[] breakUpBody(String input){
-        String[] result;
+        /*
+        String[] temp;
+        String[] result = new String[6];
 
-        result = input.split(",");
-
-        return result;
+        temp = input.split(" ");
+        result.add(temp[4]);
+        */
+        return null;
     }
 
     private void waitABit() {
