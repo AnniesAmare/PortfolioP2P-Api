@@ -243,6 +243,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                             break;
+
+                        case "getdata":
+                            //the request-body contains the key for the data
+                            httpRequest = new HttpRequest("HTTP", "GET", "getData",
+                                    "9F86D081884C7D659A2FEAA0C55AD015A3BF4F1B2B0B822CD15D6C15B0F00A08");
+                            clientRequest = httpRequest.GetJsonString();
+                            break;
+
+                        case "deletedata":
+                            //the request-body contains the key for the data
+                            httpRequest = new HttpRequest("HTTP", "DEL", "deleteData",
+                                    "9F86D081884C7D659A2FEAA0C55AD015A3BF4F1B2B0B822CD15D6C15B0F00A08");
+                            clientRequest = httpRequest.GetJsonString();
+                            break;
+
+
+
+
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.toLowerCase());
                     }

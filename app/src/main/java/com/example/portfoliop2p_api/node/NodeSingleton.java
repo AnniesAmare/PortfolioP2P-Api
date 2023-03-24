@@ -199,6 +199,22 @@ public class NodeSingleton {
 
                                 break;
 
+                            case "getdata":
+                                //gets data based on key
+                                String data = node.GetData(httpRequest.Body);
+                                //sends data back to client
+                                httpResponse = new HttpResponse("HTTP", "200 OK", data);
+
+                                break;
+
+                            case "deletedata":
+                                //deletes data based on key
+                                String del_data = node.DeleteData(httpRequest.Body);
+                                //sends data back to client
+                                httpResponse = new HttpResponse("HTTP", "200 OK", "The data: " + del_data + ", has been deleted");
+
+                                break;
+
                             default:
                                 System.out.println("Does not recognize path: " + httpRequest.Path.toLowerCase());
                                 httpResponse = new HttpResponse("HTTP", "400 Bad Request");

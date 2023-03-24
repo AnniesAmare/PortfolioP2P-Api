@@ -65,7 +65,7 @@ public class Node extends Application {
         //default value in storage FOR TESTING
         this.DataStorage.put(
                 "9F86D081884C7D659A2FEAA0C55AD015A3BF4F1B2B0B822CD15D6C15B0F00A08",
-                "test");
+                "testing_data");
 
     }
 
@@ -100,6 +100,20 @@ public class Node extends Application {
 
         return dataId;
     }
+
+
+    public String GetData(String dataId){
+        String data = this.DataStorage.get(dataId).toString();
+        return data;
+    }
+
+
+    public String DeleteData(String key){
+        String data = this.DataStorage.remove(key).toString();
+        return data;
+    }
+
+
 
 
 
