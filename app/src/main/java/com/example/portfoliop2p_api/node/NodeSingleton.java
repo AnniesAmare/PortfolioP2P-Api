@@ -1,20 +1,16 @@
 package com.example.portfoliop2p_api.node;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-
 import android.annotation.SuppressLint;
 import android.net.wifi.WifiManager;
 
 import com.example.portfoliop2p_api.http.HttpRequest;
 import com.example.portfoliop2p_api.http.HttpResponse;
-import com.example.portfoliop2p_api.data.Data;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.security.Permission;
 import java.util.ArrayList;
 
 public class NodeSingleton {

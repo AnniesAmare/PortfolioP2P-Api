@@ -3,16 +3,9 @@ package com.example.portfoliop2p_api.node;
 import com.example.portfoliop2p_api.data.Data;
 import com.example.portfoliop2p_api.data.SHA256;
 
-import android.Manifest;
 import android.app.Application;
-import android.content.IntentSender;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

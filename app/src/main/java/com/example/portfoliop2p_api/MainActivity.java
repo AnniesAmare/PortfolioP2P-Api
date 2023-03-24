@@ -26,8 +26,6 @@ import android.os.UserHandle;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.portfoliop2p_api.http.HttpRequest;
@@ -46,22 +44,14 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.Looper;
-import android.view.View;
-import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -290,8 +280,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         //Required getAccess() location package methods imported
-        //Needed to request permissions for location in a thread
-        //DO NOT DELETE ANY OF THESE METHODS!!!!!
+        //NOTE: Needed to request location in a non-main thread
+        // --> DO NOT DELETE ANY OF THESE !!!!!
         @Override
         public AssetManager getAssets() {
             return null;
