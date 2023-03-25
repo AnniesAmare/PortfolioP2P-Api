@@ -132,7 +132,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 break;
 
                             case "updatephonebook":
-
                                 ArrayList<String> rightNeighbors = node.GetPhonebookRight();
                                 ArrayList<String> leftNeighbors = node.GetPhonebookLeft();
                                 JSONObject json = new JSONObject();
