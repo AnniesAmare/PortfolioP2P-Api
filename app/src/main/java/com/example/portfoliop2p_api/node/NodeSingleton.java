@@ -150,10 +150,11 @@ public class NodeSingleton {
                                     JSONObject json_input = new JSONObject(input);
                                     right = json_input.get("rightneighbors").toString();
                                     left = json_input.get("leftneighbors").toString();
+                                    System.out.println(right = json_input.get("rightneighbors").toString());
                                 }catch (Exception e){
                                     System.out.println("Could not convert " + input + " to json");
                                 }
-
+/*
                                 right = right.replace("[","");
                                 right = right.replace("]","");
                                 right = right.replace(" ","");
@@ -168,6 +169,8 @@ public class NodeSingleton {
                                 node.nodesLeft.set(0, left.split(",")[0]);
                                 node.nodesLeft.set(1, left.split(",")[1]);
                                 node.nodesLeft.set(2, left.split(",")[2]);
+
+ */
 
 
                                 System.out.println(node.nodesRight.get(0));

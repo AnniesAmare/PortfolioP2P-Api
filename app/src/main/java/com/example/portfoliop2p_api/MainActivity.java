@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.portfoliop2p_api.http.HttpRequest;
 import com.example.portfoliop2p_api.http.HttpResponse;
 import com.example.portfoliop2p_api.node.Node;
+import com.example.portfoliop2p_api.node.NodeObserver;
 import com.example.portfoliop2p_api.node.NodeSingleton;
 
 import org.json.JSONException;
@@ -24,7 +25,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NodeObserver {
     // Variables
     String command;
     String serverIp;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Singleton
         node = nodeSingleton.node;
+        nodeSingleton.addObserver(this);
 
         //getting the data from the IP Activity
         Bundle extras = getIntent().getExtras();
@@ -91,6 +93,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Thread clientThread = new Thread(new MyClientThread());
             clientThread.start();
         }
+    }
+
+    @Override
+    public void update(String info) {
+        sUpdate(info);
     }
 
     class MyClientThread implements Runnable {
