@@ -183,7 +183,13 @@ public class NodeSingleton {
                                     if (httpRequest.Body.contains("|")) {
                                         String hash = node.AddData(httpRequest.Body);
                                         //send back key in body
-                                        httpResponse = new HttpResponse("HTTP", "200 OK", "Location data has been added. The key is: " + hash);
+                                        JSONObject jsonData = new JSONObject();
+                                        try {
+                                            jsonData.put("key", hash);
+                                        } catch (JSONException e) {
+                                            System.out.println("Could not convert data key: " + hash + " to json");
+                                        }
+                                        httpResponse = new HttpResponse("HTTP", "200 OK", jsonData.toString());
                                     }else{
                                         String hash = node.AddData(httpRequest.Body);
                                         //send back key in body

@@ -22,6 +22,7 @@ public class Node extends Application {
     ArrayList<String> nodesRight;
 
     Dictionary DataStorage;
+    public List<String> DataKeys;
 
     public String getId(){
         return id;
@@ -53,6 +54,7 @@ public class Node extends Application {
         this.nodesRight = nodesRight;
 
         DataStorage = new Hashtable();
+        this.DataKeys = new ArrayList<String>();
 
 
         //default value in storage FOR TESTING
@@ -91,7 +93,6 @@ public class Node extends Application {
 
 
     public String GetData(String dataId){
-
         try{
             String data = this.DataStorage.get(dataId).toString();
 
@@ -122,16 +123,12 @@ public class Node extends Application {
     }
 
     public List<String> getDataStorageKeys(){
-        try{
-            Enumeration<String> enumeration = this.DataStorage.keys();
-            List<String> keys = Collections.list(enumeration);
-            return keys;
-
-        }catch (Exception e){
+        if (!DataKeys.isEmpty()){
+            return DataKeys;
+        } else {
             List<String> error = new ArrayList<String>();
             error.add("Error: No keys found");
             return error;
-
         }
     }
 

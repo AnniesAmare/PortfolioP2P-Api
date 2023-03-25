@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //default value for clientRequest
                 String clientRequest = command;
 
+                boolean dataAdded = false;
                 //Constructing the command
                 if (!command.isEmpty()){
                     HttpRequest httpRequest;
@@ -166,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 break;
 
                             case "adddata":
-
                                 if(!location.isEmpty()) {
                                     httpRequest = new HttpRequest("HTTP", "POST", "addData", location);
                                     clientRequest = httpRequest.GetJsonString();
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     httpRequest = new HttpRequest("HTTP", "POST", "addData", "testing_data");
                                     clientRequest = httpRequest.GetJsonString();
                                 }
-
+                                dataAdded = true;
                                 break;
 
                             case "getdata":
@@ -182,6 +182,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 if(!dataKey.isEmpty()){
                                     httpRequest = new HttpRequest("HTTP", "GET", "getData", dataKey);
                                     clientRequest = httpRequest.GetJsonString();
+
+
                                 }else{
                                     //the request-body contains the key for the data
                                     httpRequest = new HttpRequest("HTTP", "GET", "getData",
@@ -208,6 +210,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 cUpdate("I said:      " + clientRequest);
                 serverResponse = inClientStream.readUTF();
                 cUpdate("Server says: " + serverResponse);
+
+                //if we've added data we want to get the key from response
+                if (dataAdded){
+                    HttpResponse serverHttpResponse = new HttpResponse(serverResponse);
+                    try{
+                        JSONObject body = new JSONObject(serverHttpResponse.Body);
+                        String key = body.getString("key");
+                        node.DataKeys.add(key);
+                    }
+                    catch (JSONException e){
+                        System.out.println("Could not get data key");
+                    }
+
+                }
 
                 waitABit();
                 connectionToServer.shutdownInput();
