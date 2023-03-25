@@ -121,7 +121,7 @@ public class NodeSingleton {
                                 httpResponse = new HttpResponse("HTTP", "200 OK", node.getId());
                                 break;
 
-                            case "getneighbors":
+                            case "getphonebook":
                                 ArrayList<String> rightNeighbors = node.GetPhonebookRight();
                                 ArrayList<String> leftNeighbors = node.GetPhonebookLeft();
                                 JSONObject json = new JSONObject();
@@ -168,9 +168,6 @@ public class NodeSingleton {
                                 node.nodesLeft.set(0, left.split(",")[0]);
                                 node.nodesLeft.set(1, left.split(",")[1]);
                                 node.nodesLeft.set(2, left.split(",")[2]);
-
-
-
 
 
                                 System.out.println(node.nodesRight.get(0));

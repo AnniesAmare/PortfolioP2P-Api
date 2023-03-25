@@ -119,11 +119,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 break;
 
                             case "getphonebook":
-                                httpRequest = new HttpRequest("HTTP", "GET", "getneighbors");
+                                httpRequest = new HttpRequest("HTTP", "GET", "getPhonebook");
                                 clientRequest = httpRequest.GetJsonString();
                                 break;
 
-                            case "newneighbor":
+                            case "updatephonebook":
 
                                 ArrayList<String> rightNeighbors = node.GetPhonebookRight();
                                 ArrayList<String> leftNeighbors = node.GetPhonebookLeft();
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 }
                                 String output = json.toString();
 
-                                httpRequest = new HttpRequest("HTTP", "GET", "updatephonebook", output);
+                                httpRequest = new HttpRequest("HTTP", "GET", "updatePhonebook", output);
 
 
                                 clientRequest = httpRequest.GetJsonString();

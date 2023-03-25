@@ -66,7 +66,7 @@ public class CommandActivity extends AppCompatActivity implements View.OnClickLi
         String command = "";
 
         if (view == newNeighbor) {
-            command = "newNeighbor";
+            command = "updatephonebook";
         }
         if (view == getID) {
             command = "getID";
