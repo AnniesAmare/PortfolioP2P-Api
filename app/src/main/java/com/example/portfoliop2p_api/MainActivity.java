@@ -16,6 +16,7 @@ import com.example.portfoliop2p_api.node.Node;
 import com.example.portfoliop2p_api.node.NodeObserver;
 import com.example.portfoliop2p_api.node.NodeSingleton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -137,8 +138,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 JSONObject json = new JSONObject();
 
                                 try{
-                                    json.put("rightNeighbors", rightNeighbors);
-                                    json.put("leftNeighbors", leftNeighbors);
+                                    JSONArray rightJsonArray = new JSONArray();
+                                    JSONArray leftJsonArray = new JSONArray();
+
+                                    //filling the json arrays
+                                    for ( String leftNeighbor : leftNeighbors ) {
+                                        leftJsonArray.put(leftNeighbor);
+                                    }
+                                    for ( String rightNeighbor : rightNeighbors ) {
+                                        rightJsonArray.put(rightNeighbor);
+                                    }
+
+                                    //putting the arrays into our json object
+                                    json.put("rightNeighbors", rightJsonArray);
+                                    json.put("leftNeighbors", leftJsonArray);
 
                                 }catch (JSONException e) {
                                     System.out.println("Could not convert Right or Left neighbors to json");
@@ -146,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 String output = json.toString();
 
                                 httpRequest = new HttpRequest("HTTP", "GET", "updatePhonebook", output);
-
 
                                 clientRequest = httpRequest.GetJsonString();
                                 break;

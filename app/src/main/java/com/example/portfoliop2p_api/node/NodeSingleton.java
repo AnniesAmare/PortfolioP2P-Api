@@ -6,6 +6,7 @@ import android.net.wifi.WifiManager;
 import com.example.portfoliop2p_api.http.HttpRequest;
 import com.example.portfoliop2p_api.http.HttpResponse;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -136,52 +137,43 @@ public class NodeSingleton {
                                 String output = json.toString();
 
                                 httpResponse = new HttpResponse("HTTP", "200 OK", output);
-
-                                System.out.println(httpResponse);
                                 break;
 
                             case "updatephonebook":
                                 String input = httpRequest.Body.toLowerCase();
 
-                                String right ="";
-                                String left ="";
-
                                 try{
                                     JSONObject json_input = new JSONObject(input);
-                                    right = json_input.get("rightneighbors").toString();
-                                    left = json_input.get("leftneighbors").toString();
-                                    System.out.println(right = json_input.get("rightneighbors").toString());
-                                }catch (Exception e){
+                                    String rightArrayString = json_input.get("rightneighbors").toString();
+                                    String leftArrayString = json_input.get("leftneighbors").toString();
+
+                                    //getting the arrays from the JSON object
+                                    JSONArray rightArray = new JSONArray(rightArrayString);
+                                    JSONArray leftArray = new JSONArray(leftArrayString);
+
+                                    //converting the json arrays to ArrayLists of Strings and replacing the node neighbors
+                                    ArrayList<String> rightList = new ArrayList<String>();
+                                    for (int i = 0; i < rightArray.length(); i++) {
+                                        String ip = rightArray.get(i).toString();
+                                        rightList.add(ip);
+
+                                    }
+                                    node.nodesRight = rightList;
+
+                                    ArrayList<String> leftList = new ArrayList<String>();
+                                    for (int i = 0; i < leftArray.length(); i++) {
+                                        String ip = leftArray.get(i).toString();
+                                        leftList.add(ip);
+                                    }
+                                    node.nodesLeft = leftList;
+
+                                }catch (JSONException e){
                                     System.out.println("Could not convert " + input + " to json");
+                                    httpResponse = new HttpResponse("HTTP", "400 Bad Request");
+                                    break;
                                 }
-/*
-                                right = right.replace("[","");
-                                right = right.replace("]","");
-                                right = right.replace(" ","");
-                                left = left.replace("[","");
-                                left = left.replace("]","");
-                                left = left.replace(" ","");
 
-                                node.nodesRight.set(0, right.split(",")[0]);
-                                node.nodesRight.set(1, right.split(",")[1]);
-                                node.nodesRight.set(2, right.split(",")[2]);
-
-                                node.nodesLeft.set(0, left.split(",")[0]);
-                                node.nodesLeft.set(1, left.split(",")[1]);
-                                node.nodesLeft.set(2, left.split(",")[2]);
-
- */
-
-
-                                System.out.println(node.nodesRight.get(0));
-                                System.out.println(node.nodesRight.get(1));
-                                System.out.println(node.nodesRight.get(2));
-
-                                System.out.println(node.nodesLeft.get(0));
-                                System.out.println(node.nodesLeft.get(1));
-                                System.out.println(node.nodesLeft.get(2));
-
-                                httpResponse = new HttpResponse("HTTP", "200 OK", "");
+                                httpResponse = new HttpResponse("HTTP", "200 OK");
                                 break;
 
                             case "adddata":
