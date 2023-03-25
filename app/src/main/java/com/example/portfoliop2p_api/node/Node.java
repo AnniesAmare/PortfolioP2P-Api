@@ -121,6 +121,20 @@ public class Node extends Application {
         }
     }
 
+    public List<String> getDataStorageKeys(){
+        try{
+            Enumeration<String> enumeration = this.DataStorage.keys();
+            List<String> keys = Collections.list(enumeration);
+            return keys;
+
+        }catch (Exception e){
+            List<String> error = new ArrayList<String>();
+            error.add("Error: No keys found");
+            return error;
+
+        }
+    }
+
 
 
 

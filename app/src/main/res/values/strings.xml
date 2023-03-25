@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PortfolioP2P-Api</string>
+    <string name="select">Select Item</string>
 </resources>
