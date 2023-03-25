@@ -7,11 +7,11 @@
     tools:context=".CommandActivity">
 
     <Button
-        android:id="@+id/newNeighbor"
+        android:id="@+id/updatePhonebook"
         android:layout_width="196dp"
         android:layout_height="0dp"
         android:layout_marginBottom="52dp"
-        android:text="New Neighbor"
+        android:text="Update Phonebook"
         app:layout_constraintBottom_toTopOf="@+id/getId"
         app:layout_constraintEnd_toEndOf="@+id/getId"
         app:layout_constraintStart_toStartOf="@+id/getId"
@@ -26,7 +26,7 @@
         app:layout_constraintBottom_toTopOf="@+id/getPhonebook"
         app:layout_constraintEnd_toEndOf="@+id/getPhonebook"
         app:layout_constraintStart_toStartOf="@+id/getPhonebook"
-        app:layout_constraintTop_toBottomOf="@+id/newNeighbor" />
+        app:layout_constraintTop_toBottomOf="@+id/updatePhonebook" />
 
     <Button
         android:id="@+id/deleteData"
@@ -79,9 +79,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="48dp"
         android:text="UNKNOWN"
-        app:layout_constraintBottom_toTopOf="@+id/newNeighbor"
-        app:layout_constraintEnd_toEndOf="@+id/newNeighbor"
-        app:layout_constraintStart_toStartOf="@+id/newNeighbor"
+        app:layout_constraintBottom_toTopOf="@+id/updatePhonebook"
+        app:layout_constraintEnd_toEndOf="@+id/updatePhonebook"
+        app:layout_constraintStart_toStartOf="@+id/updatePhonebook"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

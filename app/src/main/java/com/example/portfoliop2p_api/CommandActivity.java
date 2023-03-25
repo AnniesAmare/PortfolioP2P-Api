@@ -15,7 +15,7 @@ import com.example.portfoliop2p_api.node.NodeSingleton;
 public class CommandActivity extends AppCompatActivity implements View.OnClickListener{
     //UI-elements
     private TextView thisIp;
-    private Button newNeighbor;
+    private Button updatePhonebook;
     private Button getID;
     private Button getPhonebook;
     private Button getData;
@@ -36,7 +36,7 @@ public class CommandActivity extends AppCompatActivity implements View.OnClickLi
         //UI
         thisIp = findViewById(R.id.textField);
 
-        newNeighbor = findViewById(R.id.newNeighbor);
+        updatePhonebook = findViewById(R.id.updatePhonebook);
         getID = findViewById(R.id.getId);
         getPhonebook = findViewById(R.id.getPhonebook);
         getData = findViewById(R.id.getData);
@@ -44,7 +44,7 @@ public class CommandActivity extends AppCompatActivity implements View.OnClickLi
         deleteData = findViewById(R.id.deleteData);
 
         // Adding the on-click listener
-        newNeighbor.setOnClickListener(this);
+        updatePhonebook.setOnClickListener(this);
         getID.setOnClickListener(this);
         getPhonebook.setOnClickListener(this);
         getData.setOnClickListener(this);
@@ -65,7 +65,7 @@ public class CommandActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         String command = "";
 
-        if (view == newNeighbor) {
+        if (view == updatePhonebook) {
             command = "updatephonebook";
         }
         if (view == getID) {
