@@ -82,14 +82,8 @@ public class Node extends Application {
         SHA256 newHash = new SHA256();
         String dataId = newHash.hash(body);
 
-        //create new data object
-        Data data = new Data(dataId,body);
-
-        //convert data to json to store it
-        String dataAsJson = data.DataToJson();
-
         //add data to storage
-        this.DataStorage.put(data.ID,dataAsJson);
+        this.DataStorage.put(dataId,body);
 
         return dataId;
     }
@@ -99,7 +93,14 @@ public class Node extends Application {
 
         try{
             String data = this.DataStorage.get(dataId).toString();
-            return data;
+
+            //create new data object
+            Data dataObj = new Data(dataId,data);
+
+            //convert data to json
+            String dataAsJson = dataObj.DataToJson();
+
+            return dataAsJson;
         }catch (Exception e){
             return "Error: Requested data not found";
 
