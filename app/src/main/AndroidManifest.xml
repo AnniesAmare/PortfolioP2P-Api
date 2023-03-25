@@ -18,6 +18,9 @@
         android:theme="@style/Theme.PortfolioP2PApi"
         tools:targetApi="31">
         <activity
+            android:name=".DataSelectionActivity"
+            android:exported="false" />
+        <activity
             android:name=".DataActivity"
             android:exported="false" />
         <activity
