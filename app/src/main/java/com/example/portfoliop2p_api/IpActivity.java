@@ -126,6 +126,12 @@ public class IpActivity extends AppCompatActivity implements View.OnClickListene
                 myIntent.putExtra("serverIp", serverIp);
                 startActivity(myIntent);
 
+            } else if (command.contains("getData") || command.contains("deleteData")) {
+                Intent myIntent = new Intent(this, DataSelectionActivity.class);
+                myIntent.putExtra("command", command);
+                myIntent.putExtra("serverIp", serverIp);
+                startActivity(myIntent);
+                
             } else {
                 Intent myIntent = new Intent(this, MainActivity.class);
                 myIntent.putExtra("command", command);
