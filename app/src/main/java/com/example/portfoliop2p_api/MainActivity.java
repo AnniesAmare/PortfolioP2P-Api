@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.portfoliop2p_api.http.HttpRequest;
@@ -25,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // Variables
     String command;
     String serverIp;
+
+    String location;
 
     //UI
     private Button backButton;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(this);
 
-        submitCommand = findViewById(R.id.submitCommand);
+        submitCommand = findViewById(R.id.addLocationDataButton);
         submitCommand.setOnClickListener(this);
 
         serverInfoTv = findViewById(R.id.serveroutput);
@@ -64,9 +65,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (extras != null) {
             command = extras.getString("command");
             serverIp = extras.getString("serverIp");
+            location = extras.getString("location");
         }
         System.out.println("\n\n"+command+"\n\n");
         System.out.println("\n\n"+serverIp+"\n\n");
+        System.out.println("\n\n"+location+"\n\n");
     }
 
 
@@ -81,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             submitCommand.setText("Resend "+command+" to "+ serverIp);
             Thread clientThread = new Thread(new MyClientThread());
             clientThread.start();
-        } else if (view.getId() == R.id.submitCommand){
+        } else if (view.getId() == R.id.addLocationDataButton){
             Thread clientThread = new Thread(new MyClientThread());
             clientThread.start();
         }
@@ -143,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             case "adddata":
 
-                                httpRequest = new HttpRequest("HTTP", "POST", "addData", "TEST");
+                                httpRequest = new HttpRequest("HTTP", "POST", "addData", location);
                                 clientRequest = httpRequest.GetJsonString();
 
                                 break;

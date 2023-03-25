@@ -12,10 +12,12 @@ import android.location.Location;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -33,15 +35,22 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnTokenCanceledListener;
 import com.google.android.gms.tasks.Task;
 
+
+
 public class DataActivity extends AppCompatActivity implements View.OnClickListener {
 
     FusedLocationProviderClient fusedLocationClient;
-    LocationCallback locationCallback; //for continuous updates
+
+    String command;
+    String serverIp;
+
 
     TextView text;
-    Button active, stop;
-    RadioButton once, continuous;
-    int counter = 0;
+    String textinfo;
+
+    ScrollView scrollText;
+
+    Button backButton, getDataButton, addDataButton, clearDataButton;
 
     String locationText;
 
@@ -51,87 +60,101 @@ public class DataActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_data);
 
         //Setting the views
-        text = findViewById(R.id.statustext);
-        active = findViewById(R.id.button);
-        stop = findViewById(R.id.button2);
-        stop.setOnClickListener(this);
-        active.setOnClickListener(this);
-        once = findViewById(R.id.once);
-        continuous = findViewById(R.id.continuous);
+        text = findViewById(R.id.clientoutput);
+        scrollText = findViewById(R.id.scrollViewClient);
+        backButton = findViewById(R.id.dataBackButton);
+        getDataButton = findViewById(R.id.getLocationDataButton);
+        addDataButton = findViewById(R.id.addLocationDataButton);
+        clearDataButton = findViewById(R.id.clearLocationDataButton);
 
-        //startMaps();
-    }
+        //set listeners
+        backButton.setOnClickListener(this);
+        getDataButton.setOnClickListener(this);
+        addDataButton.setOnClickListener(this);
+        clearDataButton.setOnClickListener(this);
+
+        textinfo = "";
+        text.setText("");
+        locationText = "";
+
+
+        //getting the data from the IP Activity
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            command = extras.getString("command");
+            serverIp = extras.getString("serverIp");
+        }
+        System.out.println("\n\n"+command+"\n\n");
+        System.out.println("\n\n"+serverIp+"\n\n");
+
+
+
+    }//onCreate
 
     @Override
     public void onClick(View view) {
-        if (view == stop){
-            if (locationCallback != null) {
-                fusedLocationClient.removeLocationUpdates(locationCallback);
+        if (view == backButton) {
+            Intent myIntent = new Intent(this, IpActivity.class);
+            startActivity(myIntent);
+        } else {
+
+            //clear Location data
+            if (view == clearDataButton){
+                text.setText("");
+                locationText = "";
+                textinfo = "";
+                return;
             }
-            return;
-        }
 
-        //Check app permissions
-        boolean fineLocationAlreadyAccepted = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-        boolean coarseLocationAlreadyAccepted = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 
-        if (!(fineLocationAlreadyAccepted && coarseLocationAlreadyAccepted)) {
-            //Dialogue to ask the user
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1234);
-            text.setText("Press again");
-            return;
-        }
+            //get location
+            if(view == getDataButton){
 
-        //We ask if Location is enabled in settings
-        askToEnableLocation();
+                //Check app permissions
+                boolean fineLocationAlreadyAccepted = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+                boolean coarseLocationAlreadyAccepted = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-        text.setText("");
-
-        //Check the radiobuttons
-        if (once.isChecked()) askForLocationOnce();
-        else askForLocationContinuously();
-
-    }
-
-    private void askForLocationContinuously() {
-
-        // Instantiate the callback-object
-        locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                counter++;
-                if (locationResult == null) {
-                    text.setText("Error: no location detected");
+                if (!(fineLocationAlreadyAccepted && coarseLocationAlreadyAccepted)) {
+                    //Dialogue to ask the user
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1234);
+                    cUpdate("Press again");
                     return;
                 }
-                Location location = locationResult.getLastLocation();
-                System.out.println(location);
-                String result = "Long: " + location.getLongitude() + " | Lat: " + location.getLatitude();
-                text.setText(counter + " location " + result);
-                //locationText = counter + " location " + result;
-            }
-        };
 
-        //Create a request object
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(5000);
-        locationRequest.setFastestInterval(1000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        //Required extra check before calling requestLocationUpdates()
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+                //We ask if Location is enabled in settings
+                askToEnableLocation();
+
+                //Get location provider
+                fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+
+                //get location
+                askForLocation();
+
+            }
+
+
+
         }
 
-        //Ask for updates
-        fusedLocationClient.requestLocationUpdates(locationRequest,
-                locationCallback,
-                Looper.getMainLooper());
+
+        if(view == addDataButton){
+
+            Intent myIntent = new Intent(this, MainActivity.class);
+            myIntent.putExtra("command", command);
+            myIntent.putExtra("serverIp", serverIp);
+            myIntent.putExtra("location", locationText);
+            startActivity(myIntent);
+
+        }
+
+
+
 
     }
 
-    private void askForLocationOnce() {
+
+    private void askForLocation() {
         //Required extra check before calling getCurrentLocation()
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -148,10 +171,17 @@ public class DataActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                    String status = counter + " location: " + location.toString();
-                    text.setText(status);
+                    String result = "Long: " + location.getLongitude() + " | Lat: " + location.getLatitude() + " | Unix Epoch Time/Date: " + location.getTime();;
+                    cUpdate(result);
+
+                    if(locationText == "") {
+                        locationText = result + ", ";
+                    }else{
+                        locationText = locationText + ", " + result;
+                    }
+
                 } else {
-                    text.setText("Error: No location");
+                    cUpdate("Error: No location");
                     askToEnableLocation();
                 }
             }
@@ -195,18 +225,16 @@ public class DataActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    //Just for fun
-    private void startMaps() {
 
-// Create a Uri from an intent string. Use the result to create an Intent.
-        Uri gmmIntentUri = Uri.parse("google.streetview:cbll=46.414382,10.013988");
-
-// Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-// Make the Intent explicit by setting the Google Maps package
-        mapIntent.setPackage("com.google.android.apps.maps");
-
-// Attempt to start an activity that can handle the Intent
-        startActivity(mapIntent);
+    private void cUpdate(String message) {
+        System.out.println(message);
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                textinfo = "CURRENT LOCATION: " + message + "\n\n" + textinfo;
+                text.setText(textinfo);
+            }
+        });
     }
-}
+
+}//DataActivity
