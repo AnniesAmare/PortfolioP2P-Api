@@ -78,11 +78,12 @@ public class Node extends Application {
 
     public String AddData(String body) {
 
-        //hashes the the data. The hashed data is kept as key
+        //new hash obj
         SHA256 newHash = new SHA256();
+        //hashes data
         String dataId = newHash.hash(body);
 
-        //add data to storage
+        //adds data to storage
         this.DataStorage.put(dataId,body);
 
         return dataId;

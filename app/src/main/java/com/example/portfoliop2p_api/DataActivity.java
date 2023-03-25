@@ -174,7 +174,7 @@ public class DataActivity extends AppCompatActivity implements View.OnClickListe
                     String result = "Long: " + location.getLongitude() + " | Lat: " + location.getLatitude() + " | Unix Epoch Time/Date: " + location.getTime();;
                     cUpdate(result);
 
-                    if(locationText == "") {
+                    if(locationText.isEmpty()) {
                         locationText = result + ", ";
                     }else{
                         locationText = locationText + ", " + result;

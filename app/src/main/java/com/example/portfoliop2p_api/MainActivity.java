@@ -146,8 +146,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             case "adddata":
 
-                                httpRequest = new HttpRequest("HTTP", "POST", "addData", location);
-                                clientRequest = httpRequest.GetJsonString();
+                                if(!location.isEmpty()) {
+                                    httpRequest = new HttpRequest("HTTP", "POST", "addData", location);
+                                    clientRequest = httpRequest.GetJsonString();
+                                }else{
+                                    httpRequest = new HttpRequest("HTTP", "POST", "addData", "testing_data");
+                                    clientRequest = httpRequest.GetJsonString();
+                                }
 
                                 break;
 

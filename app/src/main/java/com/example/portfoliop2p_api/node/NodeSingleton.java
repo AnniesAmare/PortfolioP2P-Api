@@ -186,13 +186,23 @@ public class NodeSingleton {
 
                             case "adddata":
 
-                                if(httpRequest.Body.contains("|")) {
-                                    String hash = node.AddData(httpRequest.Body);
-                                    //send back key in body
-                                    httpResponse = new HttpResponse("HTTP", "200 OK", "Data has been added. The key is: " + hash);
-                                }else{
+                                if(!httpRequest.Body.isEmpty()) {
+
+                                    if (httpRequest.Body.contains("|")) {
+                                        String hash = node.AddData(httpRequest.Body);
+                                        //send back key in body
+                                        httpResponse = new HttpResponse("HTTP", "200 OK", "Location data has been added. The key is: " + hash);
+                                    }else{
+                                        String hash = node.AddData(httpRequest.Body);
+                                        //send back key in body
+                                        httpResponse = new HttpResponse("HTTP", "200 OK", "Data has been added. The key is: " + hash);
+
+                                    }
+
+                                }else {
                                     httpResponse = new HttpResponse("HTTP", "400 Bad Request");
                                 }
+
 
                                 break;
 
